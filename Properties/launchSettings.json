@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BookCleaner3": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Books\\Done_TXT\""
+    }
+  }
+}
