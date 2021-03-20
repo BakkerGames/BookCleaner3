@@ -12,6 +12,13 @@ namespace BookCleaner3
                 Console.WriteLine("Syntax: path");
                 return 1;
             }
+            if (!Directory.Exists(args[0]))
+            {
+                Console.WriteLine($"Directory not found: {args[0]}");
+                return 2;
+            }
+            Console.WriteLine($"Checking: {args[0]}");
+            Console.WriteLine();
             int fileCount = 0;
             int changedCount = 0;
             int errorCount = 0;
@@ -34,7 +41,7 @@ namespace BookCleaner3
                     errorCount++;
                 }
             }
-            Console.Write("\r");
+            Console.Write("\r     \r");
             if (changedCount > 0)
             {
                 Console.WriteLine();
