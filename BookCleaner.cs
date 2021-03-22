@@ -22,6 +22,7 @@ namespace BookCleaner3
                 string tempLine = line;
                 if (tempLine.StartsWith("\t###"))
                 {
+                    // remove these
                     changed = true;
                     continue;
                 }
@@ -36,7 +37,10 @@ namespace BookCleaner3
                     }
                     hangingQuote = false;
                 }
-                changed = changed || FixSpaces(ref tempLine);
+                if (FixSpaces(ref tempLine))
+                {
+                    changed = true;
+                }
                 if (FindQuoteErrors(tempLine, ref hangingQuote))
                 {
                     result.AppendLine("\t### mismatched quotes ###");
@@ -70,8 +74,6 @@ namespace BookCleaner3
             if (tempLine.StartsWith("\t<td>")) return false;
             tempLine = tempLine.Replace("\" '", "\"'");
             tempLine = tempLine.Replace("' \"", "'\"");
-            tempLine = tempLine.Replace(" —", "—");
-            tempLine = tempLine.Replace("— ", "—");
             foreach (char c in tempLine)
             {
                 if (inTag)
@@ -156,6 +158,12 @@ namespace BookCleaner3
                 tempLine = tempLine.Replace("\t ", "\t");
             while (tempLine.Contains("  "))
                 tempLine = tempLine.Replace("  ", " ");
+            while (tempLine.Contains(" — "))
+                tempLine = tempLine.Replace(" — ", "—");
+            while (tempLine.Contains(" —")) 
+                tempLine = tempLine.Replace(" —", "—");
+            while (tempLine.Contains("— ")) 
+                tempLine = tempLine.Replace("— ", "—");
             return (orig != tempLine);
         }
 
